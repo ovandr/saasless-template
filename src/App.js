@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import './App.css';
 
 //Amplify
-import Amplify, { Auth } from 'aws-amplify';
-
+import Amplify from 'aws-amplify';
 import { withAuthenticator } from 'aws-amplify-react';
-
+import aws_exports from './aws-exports';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
   Page1,
   Page2
 } from './pages';
+
+Amplify.configure(aws_exports);
+
 class App extends Component {
   render() {
     return (
