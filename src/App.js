@@ -11,10 +11,10 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import aws_exports from './aws-exports';
 import Amplify, { Auth } from 'aws-amplify';
 
-import { Authenticator } from './auth-react';
-import AWSAuth from './auth-react/aws-auth';
+import { Auth as sAuth } from './frontends/auth-core';
+import { Authenticator, PrivateRoute } from './frontends/auth-react';
 
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import {
   Page1,
   Page2,
@@ -24,10 +24,11 @@ import {
 } from './pages';
 import Layout from './layouts/layout';
 
-
 import awsconfig from './aws-exports';
 
-const auth = new AWSAuth();
+const auth = new sAuth({
+
+});
 Amplify.configure(aws_exports);
 
 const GRAPHQL_API_REGION = awsconfig.aws_appsync_region
@@ -63,18 +64,21 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <ApolloProvider client={client}>
           <Router>
             <Authenticator auth={auth}>
               <MuiThemeProvider theme={theme}>
                 <Layout>
                   <Switch>
-                    <Route exact path="/" component={Page1} />
                     <Route exact path="/signup" component={SignUpPage} />
                     <Route exact path="/signin" component={SignInPage} />
                     <Route exact path="/verify" name="Verify Page" component={VerifyPage} />
-                    <Route exact path="/page2" component={Page2} />
+
+                    <PrivateRoute Route exact path="/" name="default">
+                      <Redirect to="/images" />
+                    </PrivateRoute>
+                    <PrivateRoute exact path="/images" component={Page1} />
+                    <PrivateRoute te exact path="/page2" component={Page2} />
                   </Switch>
                 </Layout>
               </MuiThemeProvider>
