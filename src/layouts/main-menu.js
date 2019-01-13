@@ -38,7 +38,7 @@ export default withStyles(styles)(({ classes }) => {
     return <React.Fragment>
         <Divider />
         <List dense>
-            <NavLink exact to={`/`}>{({ active }) => (
+            <NavLink exact to={`/images`}>{({ active }) => (
                 <ListItem button selected={active}>
                     <DenseListItemIcon>
                         <ImageIcon />
