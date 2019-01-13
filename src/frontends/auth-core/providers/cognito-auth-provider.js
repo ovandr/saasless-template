@@ -41,6 +41,9 @@ export class CognitoAuthProvider {
       await this.awsAuth.signUp({
         username: formData.email,
         password: formData.password,
+        attributes: {
+          email: formData.email
+        }
       });
       await this.login(formData);
       return {
