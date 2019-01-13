@@ -26,9 +26,7 @@ import Layout from './layouts/layout';
 
 import awsconfig from './aws-exports';
 
-const auth = new sAuth({
-
-});
+const auth = new sAuth({});
 Amplify.configure(aws_exports);
 
 const GRAPHQL_API_REGION = awsconfig.aws_appsync_region
@@ -68,19 +66,19 @@ class App extends Component {
           <Router>
             <Authenticator auth={auth}>
               <MuiThemeProvider theme={theme}>
-                <Layout>
-                  <Switch>
-                    <Route exact path="/signup" component={SignUpPage} />
-                    <Route exact path="/signin" component={SignInPage} />
-                    <Route exact path="/verify" name="Verify Page" component={VerifyPage} />
+                <Switch>
+                  <Route exact path="/signup" component={SignUpPage} />
+                  <Route exact path="/signin" component={SignInPage} />
+                  <Route exact path="/verify" name="Verify Page" component={VerifyPage} />
 
+                  <Layout>
                     <PrivateRoute Route exact path="/" name="default">
                       <Redirect to="/images" />
                     </PrivateRoute>
                     <PrivateRoute exact path="/images" component={Page1} />
                     <PrivateRoute te exact path="/page2" component={Page2} />
-                  </Switch>
-                </Layout>
+                  </Layout>
+                </Switch>
               </MuiThemeProvider>
             </Authenticator>
           </Router>

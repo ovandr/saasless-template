@@ -16,7 +16,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MainMenu from './main-menu';
 
-import { Auth } from 'aws-amplify';
+import { Logout } from '../frontends/auth-react';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
@@ -143,7 +143,11 @@ class Layout extends React.Component {
                             Saasless Template
                         </Typography>
                         <div className={classes.grow} />
-                        <Button color="inherit" onClick={e => Auth.signOut()}>Log Out</Button>
+                        <Logout>{({ logout }) => (
+                            <Button color="inherit" onClick={logout}>
+                                Log Out
+                            </Button>
+                        )}</Logout>
                     </Toolbar>
                 </AppBar>
                 <MuiThemeProvider theme={menuTheme}>
