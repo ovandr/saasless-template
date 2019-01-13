@@ -1,12 +1,12 @@
 import React from 'react';
 
-import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import HomeIcon from '@material-ui/icons/Home';
+import ImageIcon from '@material-ui/icons/Image';
 import PeopleIcon from '@material-ui/icons/People';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -16,7 +16,7 @@ import { NavLink } from '../components/nav-link';
 const styles = theme => ({
     link: {
         textDecoration: 'none',
-    },
+    }
 });
 
 const denseIconStyles = theme => ({
@@ -41,9 +41,9 @@ export default withStyles(styles)(({ classes }) => {
             <NavLink exact to={`/`}>{({ active }) => (
                 <ListItem button selected={active}>
                     <DenseListItemIcon>
-                        <HomeIcon />
+                        <ImageIcon />
                     </DenseListItemIcon>
-                    <ListItemText primary="Page1" />
+                    <ListItemText primary="Upload Images" />
                 </ListItem>
             )}
             </NavLink>
@@ -53,7 +53,7 @@ export default withStyles(styles)(({ classes }) => {
                     <DenseListItemIcon>
                         <PeopleIcon />
                     </DenseListItemIcon>
-                    <ListItemText primary="Page2" />
+                    <ListItemText primary="Nested" />
                 </ListItem>
             )}
             </NavLink>

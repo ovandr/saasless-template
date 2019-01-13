@@ -60,8 +60,6 @@ class AddPhoto extends Component {
                 mimeType,
                 localUri: selectedFile,
             };
-
-            console.log(file)
         }
 
         this.setState(this.getInitialState(), () => {
