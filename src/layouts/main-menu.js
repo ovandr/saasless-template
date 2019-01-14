@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ImageIcon from '@material-ui/icons/Image';
 import PeopleIcon from '@material-ui/icons/People';
+import PersonIcon from '@material-ui/icons/Person';
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -54,6 +55,15 @@ export default withStyles(styles)(({ classes }) => {
                         <PeopleIcon />
                     </DenseListItemIcon>
                     <ListItemText primary="Nested" />
+                </ListItem>
+            )}
+            </NavLink>
+            <NavLink exact to={`/profile`}>{({ active }) => (
+                <ListItem button selected={active}>
+                    <DenseListItemIcon>
+                        <PersonIcon />
+                    </DenseListItemIcon>
+                    <ListItemText primary="Profile" />
                 </ListItem>
             )}
             </NavLink>

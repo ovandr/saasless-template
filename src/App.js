@@ -20,7 +20,8 @@ import {
   Page2,
   SignUpPage,
   SignInPage,
-  VerifyPage
+  VerifyPage,
+  ProfilePage
 } from './pages';
 import Layout from './layouts/layout';
 
@@ -72,11 +73,12 @@ class App extends Component {
                   <Route exact path="/verify" name="Verify Page" component={VerifyPage} />
 
                   <Layout>
-                    <PrivateRoute Route exact path="/" name="default">
+                    <PrivateRoute exact path="/" name="default">
                       <Redirect to="/images" />
                     </PrivateRoute>
                     <PrivateRoute exact path="/images" component={Page1} />
-                    <PrivateRoute te exact path="/page2" component={Page2} />
+                    <PrivateRoute exact path="/page2" component={Page2} />
+                    <PrivateRoute exact path="/profile" component={ProfilePage} />
                   </Layout>
                 </Switch>
               </MuiThemeProvider>
