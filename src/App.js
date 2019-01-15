@@ -4,11 +4,11 @@ import './App.css';
 import AWSAppSyncClient from "aws-appsync";
 import { ApolloProvider } from 'react-apollo';
 
-import blue from '@material-ui/core/colors/blue';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import theme from './themes/app-theme';
 
 //Amplify
-import aws_exports from './aws-exports';
+import awsconfig from './aws-exports';
 import Amplify, { Auth } from 'aws-amplify';
 
 import { Auth as sAuth } from './frontends/auth-core';
@@ -25,10 +25,8 @@ import {
 } from './pages';
 import Layout from './layouts/layout';
 
-import awsconfig from './aws-exports';
-
 const auth = new sAuth({});
-Amplify.configure(aws_exports);
+Amplify.configure(awsconfig);
 
 const GRAPHQL_API_REGION = awsconfig.aws_appsync_region
 const GRAPHQL_API_ENDPOINT_URL = awsconfig.aws_appsync_graphqlEndpoint
@@ -43,20 +41,6 @@ const client = new AWSAppSyncClient({
     jwtToken: async () => (await Auth.currentSession()).getAccessToken().getJwtToken(),
   },
   complexObjectsCredentials: () => Auth.currentCredentials()
-});
-
-const theme = createMuiTheme({
-  palette: {
-    type: 'light',
-    primary: blue
-  },
-  typography: {
-    fontSize: 14,
-    useNextVariants: true,
-  },
-  spacing: {
-    unit: 6
-  }
 });
 
 class App extends Component {

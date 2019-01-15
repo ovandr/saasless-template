@@ -18,25 +18,10 @@ import MainMenu from './main-menu';
 
 import { Logout } from '../frontends/auth-react';
 
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import menuTheme from '../themes/navigation-theme';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
-
-const menuTheme = createMuiTheme({
-    palette: {
-        type: 'dark',
-        text: {
-            primary: '#b7b9bc',
-        },
-        background: {
-            paper: '#19212b',
-            default: '#19212b',
-        },
-    },
-    typography: {
-        useNextVariants: true,
-    },
-});
 
 const styles = theme => ({
     root: {
