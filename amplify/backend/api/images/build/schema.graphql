@@ -1,0 +1,139 @@
+type Picture {
+  id: ID!
+  name: String
+  owner: String
+  visibility: Visibility
+  file: S3Object
+  createdAt: String
+}
+
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+enum Visibility {
+  public
+  private
+}
+
+input S3ObjectInput {
+  bucket: String!
+  region: String!
+  key: String!
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelPictureConnection {
+  items: [Picture]
+  nextToken: String
+}
+
+input ModelStringFilterInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+}
+
+input ModelIDFilterInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+}
+
+input ModelIntFilterInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  contains: Int
+  notContains: Int
+  between: [Int]
+}
+
+input ModelFloatFilterInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  contains: Float
+  notContains: Float
+  between: [Float]
+}
+
+input ModelBooleanFilterInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelPictureFilterInput {
+  id: ModelIDFilterInput
+  name: ModelStringFilterInput
+  owner: ModelStringFilterInput
+  createdAt: ModelStringFilterInput
+  and: [ModelPictureFilterInput]
+  or: [ModelPictureFilterInput]
+  not: ModelPictureFilterInput
+}
+
+type Query {
+  getPicture(id: ID!): Picture
+  listPictures(filter: ModelPictureFilterInput, limit: Int, nextToken: String): ModelPictureConnection
+}
+
+input CreatePictureInput {
+  id: ID
+  name: String
+  owner: String
+  visibility: Visibility
+  file: S3ObjectInput
+  createdAt: String
+}
+
+input UpdatePictureInput {
+  id: ID!
+  name: String
+  owner: String
+  visibility: Visibility
+  file: S3ObjectInput
+  createdAt: String
+}
+
+input DeletePictureInput {
+  id: ID
+}
+
+type Mutation {
+  createPicture(input: CreatePictureInput!): Picture
+  updatePicture(input: UpdatePictureInput!): Picture
+  deletePicture(input: DeletePictureInput!): Picture
+}
+
+type Subscription {
+  onCreatePicture: Picture @aws_subscribe(mutations: ["createPicture"])
+  onUpdatePicture: Picture @aws_subscribe(mutations: ["updatePicture"])
+  onDeletePicture: Picture @aws_subscribe(mutations: ["deletePicture"])
+}

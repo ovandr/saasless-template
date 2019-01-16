@@ -1,4 +1,11 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Install & configure the AWS Amplify CLI. Note: we're going to be using the multi environment CLI version as it is the newest version.
+
+```
+npm install -g @aws-amplify/cli@multienv
+
+amplify configure
+```
+
 
 ## Available Scripts
 

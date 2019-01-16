@@ -1,0 +1,13 @@
+{
+    "bucketName": "saasless-template-user-files",
+    "authPolicyName": "s3_amplify_7f7e4ce6",
+    "unauthPolicyName": "s3_amplify_7f7e4ce6",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authPermissions": "rw",
+    "unauthPermissions": ""
+}

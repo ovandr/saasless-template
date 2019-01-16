@@ -1,0 +1,13 @@
+{
+    "AppSyncApiName": "images",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authsaaslesscognito",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "schemaGraphql": "s3://saasless-template-20190116193900-deployment/amplify-appsync-files/schema.graphql.1547658038879",
+    "ResolverBucket": "saasless-template-20190116193900-deployment",
+    "ResolverRootKey": "amplify-appsync-files",
+    "DeploymentTimestamp": "1547658038879"
+}
