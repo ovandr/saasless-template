@@ -31,7 +31,6 @@ export class ProfilePage extends Component {
     }
 
     render() {
-        console.log(this.state.userInfo);
         return (
             <Card>
                 <CardHeader title="Profile Info" />
