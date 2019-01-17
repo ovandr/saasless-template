@@ -14,8 +14,7 @@ import PeopleIcon from '@material-ui/icons/People';
 import PersonIcon from '@material-ui/icons/Person';
 
 import { withStyles } from '@material-ui/core/styles';
-
-import { NavLink } from '../components/nav-link';
+import { NavLink } from 'react-router-dom';
 
 const styles = theme => ({
     link: {
@@ -23,6 +22,9 @@ const styles = theme => ({
     },
     nested: {
         paddingLeft: theme.spacing.unit * 4,
+    },
+    active: {
+        backgroundColor: theme.palette.action.selected
     }
 });
 
@@ -56,25 +58,24 @@ class MainMenu extends Component {
             <React.Fragment>
                 <Divider />
                 <List dense>
-                    <NavLink exact to={`/images`}>{({ active }) => (
-                        <ListItem button selected={active}>
-                            <DenseListItemIcon>
-                                <ImageIcon />
-                            </DenseListItemIcon>
-                            <ListItemText primary="Upload Images" />
-                        </ListItem>
-                    )}
-                    </NavLink>
+
+                    <ListItem button component={NavLink} exact to={`/images`} activeClassName={classes.active}>
+                        <DenseListItemIcon>
+                            <ImageIcon />
+                        </DenseListItemIcon>
+                        <ListItemText primary="Upload Images" />
+                    </ListItem>
+
                     <ListSubheader>Your Active Services</ListSubheader>
-                    <NavLink exact to={`/page2`}>{({ active }) => (
-                        <ListItem button selected={active}>
-                            <DenseListItemIcon>
-                                <PeopleIcon />
-                            </DenseListItemIcon>
-                            <ListItemText primary="Nested" />
-                        </ListItem>
-                    )}
-                    </NavLink>
+                    <Divider />
+
+                    <ListItem button component={NavLink} exact to={`/page2`} activeClassName={classes.active}>
+                        <DenseListItemIcon>
+                            <PeopleIcon />
+                        </DenseListItemIcon>
+                        <ListItemText primary="Nested" />
+                    </ListItem>
+
                     <ListItem button onClick={this.handleClick}>
                         <DenseListItemIcon>
                             <PersonIcon />
@@ -82,21 +83,19 @@ class MainMenu extends Component {
                         <ListItemText primary="User" />
                         {this.state.open ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
+
                     <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding dense>
-                            <NavLink exact to={`/profile`}>{({ active }) => (
-                                <ListItem button className={classes.nested} selected={active}>
-                                    <DenseListItemIcon>
-                                        <PersonIcon />
-                                    </DenseListItemIcon>
-                                    <ListItemText primary="Info" />
-                                </ListItem>
-                            )}
-                            </NavLink>
+                            <ListItem button component={NavLink} className={classes.nested} exact to={`/profile`} activeClassName={classes.active}>
+                                <DenseListItemIcon>
+                                    <PersonIcon />
+                                </DenseListItemIcon>
+                                <ListItemText primary="Info" />
+                            </ListItem>
                         </List>
                     </Collapse>
+
                 </List>
-                <Divider />
             </React.Fragment>
         )
     }
