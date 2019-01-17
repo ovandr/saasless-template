@@ -57,12 +57,14 @@ class App extends Component {
                   <Route exact path="/verify" name="Verify Page" component={VerifyPage} />
 
                   <Layout>
-                    <PrivateRoute exact path="/" name="default">
-                      <Redirect to="/images" />
-                    </PrivateRoute>
-                    <PrivateRoute exact path="/images" component={Page1} />
-                    <PrivateRoute exact path="/page2" component={Page2} />
-                    <PrivateRoute exact path="/profile" component={ProfilePage} />
+                    <Switch>
+                      <PrivateRoute exact path="/images" component={Page1} />
+                      <PrivateRoute exact path="/page2" component={Page2} />
+                      <PrivateRoute exact path="/profile" component={ProfilePage} />
+                      <Route exact path="/">
+                        <Redirect to="/images" />
+                      </Route>
+                    </Switch>
                   </Layout>
                 </Switch>
               </MuiThemeProvider>
