@@ -10,42 +10,42 @@ import NavItem from './nav-item';
 
 export default class MainMenu extends Component {
 
-    renderList(items) {
-        return items.map((item) => this.renderItem(item));
-    }
+  renderList(items) {
+    return items.map((item) => this.renderItem(item));
+  }
 
-    renderItem(item) {
-        return (
-            item.header ? this.renderHeader(item) :
-                item.children ? this.renderCollapse(item) :
-                    item.divider ? <Divider /> :
-                        this.renderSimpleItem(item)
-        );
-    }
+  renderItem(item) {
+    return (
+      item.header ? this.renderHeader(item) :
+        item.children ? this.renderCollapse(item) :
+          item.divider ? <Divider /> :
+            this.renderSimpleItem(item)
+    );
+  }
 
-    renderHeader(item) {
-        return (<ListSubheader>{item.header}</ListSubheader>)
-    }
+  renderHeader(item) {
+    return (<ListSubheader>{item.header}</ListSubheader>)
+  }
 
-    renderCollapse(item) {
-        return (
-            <CollapseNavItem {...item}>
-                <List disablePadding>
-                    {this.renderList(item.children)}
-                </List>
-            </CollapseNavItem>
-        );
-    }
+  renderCollapse(item) {
+    return (
+      <CollapseNavItem {...item}>
+        <List disablePadding>
+          {this.renderList(item.children)}
+        </List>
+      </CollapseNavItem>
+    );
+  }
 
-    renderSimpleItem(item) {
-        return (<NavItem {...item}></NavItem>)
-    }
+  renderSimpleItem(item) {
+    return (<NavItem {...item}></NavItem>)
+  }
 
-    render() {
-        return (
-            <List>
-                {this.renderList(navigation)}
-            </List>
-        )
-    }
+  render() {
+    return (
+      <List disablePadding>
+        {this.renderList(navigation)}
+      </List>
+    )
+  }
 }

@@ -25,5 +25,8 @@ export default [
         name: 'Info'
       }
     ]
+  },
+  {
+    divider: true
   }
 ];
