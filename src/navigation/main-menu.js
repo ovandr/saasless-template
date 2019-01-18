@@ -19,7 +19,7 @@ export default class MainMenu extends Component {
       item.header ? this.renderHeader(item) :
         item.children ? this.renderCollapse(item) :
           item.divider ? <Divider /> :
-            this.renderSimpleItem(item)
+            <NavItem {...item}></NavItem>
     );
   }
 
@@ -31,14 +31,14 @@ export default class MainMenu extends Component {
     return (
       <CollapseNavItem {...item}>
         <List disablePadding>
-          {this.renderList(item.children)}
+          {this.renderNestedList(item.children)}
         </List>
       </CollapseNavItem>
     );
   }
 
-  renderSimpleItem(item) {
-    return (<NavItem {...item}></NavItem>)
+  renderNestedList(items) {
+    return items.map((item) => <NavItem {...item} isNested></NavItem>);
   }
 
   render() {

@@ -25,7 +25,16 @@ class NavItem extends Component {
     const { classes } = this.props;
 
     return (
-      <ListItem button component={NavLink} exact to={this.props.path} activeClassName={classes.active}>
+      <ListItem
+        button
+        component={NavLink}
+        exact
+        to={this.props.path}
+        activeClassName={classes.active}
+        className={{
+          [classes.nested]: this.props.isNested
+        }}
+      >
         <ListItemIcon className={classes.icon}>
           <Icon>{this.props.icon}</Icon>
         </ListItemIcon>
