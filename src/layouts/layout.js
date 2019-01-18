@@ -97,8 +97,9 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, theme, width } = this.props;
+    const { classes, width } = this.props;
     const isXS = width === 'xs';
+    
     const header = (
       <AppBar
         position="fixed"
