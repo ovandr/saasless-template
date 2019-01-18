@@ -10,9 +10,6 @@ export default [
     name: 'Page2'
   },
   {
-    header: 'List Group Header'
-  },
-  {
     divider: true
   },
   {

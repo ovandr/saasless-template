@@ -8,7 +8,6 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
@@ -166,10 +165,11 @@ class Layout extends React.Component {
           <Hidden xsDown implementation="js">
             <Drawer
               variant="permanent"
-              className={classNames(classes.drawer, {
+              className={{
+                [classes.drawer]: true,
                 [classes.drawerOpen]: this.state.open,
                 [classes.drawerClose]: !this.state.open
-              })}
+              }}
               classes={{
                 paper: classNames({
                   [classes.drawerOpen]: this.state.open,
@@ -186,7 +186,7 @@ class Layout extends React.Component {
           <div className={classes.toolbar} />
           {this.props.children}
         </main>
-      </div>
+      </div >
     );
   }
 }
