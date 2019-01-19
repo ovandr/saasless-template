@@ -13,15 +13,15 @@ const S3_BUCKET_REGION = awsconfig.aws_user_files_s3_bucket_region
 const S3_BUCKET_NAME = awsconfig.aws_user_files_s3_bucket
 
 export class Page1 extends Component {
-    render() {
-        return (
-            <Card>
-                <CardHeader title="Upload Photo Page" />
-                <CardContent>
-                    <AddPhoto options={{ bucket: S3_BUCKET_NAME, region: S3_BUCKET_REGION }} />
-                    <AllPhotos />
-                </CardContent>
-            </Card>
-        )
-    }
+  render() {
+    return (
+      <Card>
+        <CardHeader title="Upload Photo Page" />
+        <CardContent>
+          <AddPhoto options={{ bucket: S3_BUCKET_NAME, region: S3_BUCKET_REGION }} />
+          <AllPhotos />
+        </CardContent>
+      </Card>
+    )
+  }
 }
