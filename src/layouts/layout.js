@@ -49,9 +49,6 @@ const styles = theme => ({
     marginLeft: 6,
     marginRight: 6
   },
-  hide: {
-    display: "none"
-  },
   drawer: {
     width: drawerWidth,
     whiteSpace: "nowrap"
@@ -99,7 +96,7 @@ class Layout extends React.Component {
   render() {
     const { classes, width } = this.props;
     const isXS = width === 'xs';
-    
+
     const header = (
       <AppBar
         position="fixed"
@@ -108,16 +105,16 @@ class Layout extends React.Component {
         })}
       >
         <Toolbar disableGutters={!this.state.open}>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={this.handleDrawerOpen}
-            className={classNames(classes.menuButton, {
-              [classes.hide]: this.state.open
-            })}
-          >
-            <MenuIcon />
-          </IconButton>
+          {!this.state.open && (
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerOpen}
+              className={classes.menuButton}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" color="inherit" noWrap>
             Saasless Template
           </Typography>
@@ -166,11 +163,11 @@ class Layout extends React.Component {
           <Hidden xsDown implementation="js">
             <Drawer
               variant="permanent"
-              className={{
+              className={classNames({
                 [classes.drawer]: true,
                 [classes.drawerOpen]: this.state.open,
                 [classes.drawerClose]: !this.state.open
-              }}
+              })}
               classes={{
                 paper: classNames({
                   [classes.drawerOpen]: this.state.open,

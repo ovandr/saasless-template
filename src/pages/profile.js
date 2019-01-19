@@ -155,7 +155,7 @@ class Profile extends Component {
               onClick={this.handleCloseSnackBar}
             >
               <CloseIcon />
-            </IconButton>,
+            </IconButton>
           ]}
         />
       </React.Fragment>

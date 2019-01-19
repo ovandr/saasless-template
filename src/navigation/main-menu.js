@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import ListSubheader from '@material-ui/core/ListSubheader';
 
 import navigation from './navigation';
 import CollapseNavItem from './collapse-item';
@@ -11,25 +10,20 @@ import NavItem from './nav-item';
 export default class MainMenu extends Component {
 
   renderList(items) {
-    return items.map((item) => this.renderItem(item));
+    return items.map((item, index) => this.renderItem(item, index));
   }
 
-  renderItem(item) {
+  renderItem(item, index) {
     return (
-      item.header ? this.renderHeader(item) :
-        item.children ? this.renderCollapse(item) :
-          item.divider ? <Divider /> :
-            <NavItem {...item}></NavItem>
+      item.children ? this.renderCollapse(item, index) :
+        item.divider ? <Divider key={index} /> :
+          <NavItem key={index} {...item}></NavItem>
     );
   }
 
-  renderHeader(item) {
-    return (<ListSubheader>{item.header}</ListSubheader>)
-  }
-
-  renderCollapse(item) {
+  renderCollapse(item, index) {
     return (
-      <CollapseNavItem {...item}>
+      <CollapseNavItem key={index} {...item}>
         <List disablePadding>
           {this.renderNestedList(item.children)}
         </List>
@@ -38,7 +32,7 @@ export default class MainMenu extends Component {
   }
 
   renderNestedList(items) {
-    return items.map((item) => <NavItem {...item} isNested></NavItem>);
+    return items.map((item, index) => <NavItem key={index} {...item} isNested></NavItem>);
   }
 
   render() {

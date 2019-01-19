@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import classNames from "classnames";
 
 import Icon from '@material-ui/core/Icon';
 import ListItem from '@material-ui/core/ListItem';
@@ -31,9 +32,9 @@ class NavItem extends Component {
         exact
         to={this.props.path}
         activeClassName={classes.active}
-        className={{
+        className={classNames({
           [classes.nested]: this.props.isNested
-        }}
+        })}
       >
         <ListItemIcon className={classes.icon}>
           <Icon>{this.props.icon}</Icon>
