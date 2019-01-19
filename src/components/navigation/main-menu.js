@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 
-import navigation from './navigation';
+import navigation from '../../navigation';
 import CollapseNavItem from './collapse-item';
 import NavItem from './nav-item';
 
