@@ -81,7 +81,7 @@
 		"authsaaslesscognito": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190116193900-deployment/amplify-cfn-templates/auth/saaslesscognito-cloudformation-template.yml",
+				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190118151320-deployment/amplify-cfn-templates/auth/saaslesscognito-cloudformation-template.yml",
 				"Parameters": {
 					"identityPoolName": "saasless_template_identity_pool",
 					"allowUnauthenticatedIdentities": false,
@@ -146,7 +146,7 @@
 		"storageuserfiles": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190116193900-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190118151320-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
 				"Parameters": {
 					"bucketName": "saasless-template-user-files",
 					"authPolicyName": "s3_amplify_7f7e4ce6",
@@ -166,7 +166,7 @@
 		"apiimages": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190116193900-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190118151320-deployment/amplify-cfn-templates/api/cloudformation-template.json",
 				"Parameters": {
 					"AppSyncApiName": "images",
 					"AuthCognitoUserPoolId": {
@@ -175,10 +175,10 @@
 							"Outputs.UserPoolId"
 						]
 					},
-					"schemaGraphql": "s3://saasless-template-20190116193900-deployment/amplify-appsync-files/schema.graphql.1547658038879",
-					"ResolverBucket": "saasless-template-20190116193900-deployment",
+					"schemaGraphql": "s3://saasless-template-20190118151320-deployment/amplify-appsync-files/schema.graphql.1547889899462",
+					"ResolverBucket": "saasless-template-20190118151320-deployment",
 					"ResolverRootKey": "amplify-appsync-files",
-					"DeploymentTimestamp": "1547658038879",
+					"DeploymentTimestamp": "1547889899462",
 					"env": "dev"
 				}
 			}
@@ -186,9 +186,18 @@
 		"hostingS3AndCloudFront": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190116193900-deployment/amplify-cfn-templates/hosting/template.json",
+				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190118151320-deployment/amplify-cfn-templates/hosting/template.json",
 				"Parameters": {
 					"bucketName": "saasless-template-hosting-bucket-dev",
+					"env": "dev"
+				}
+			}
+		},
+		"functionsaaslessfunctions": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190118151320-deployment/amplify-cfn-templates/function/saaslessfunctions-cloudformation-template.json",
+				"Parameters": {
 					"env": "dev"
 				}
 			}
