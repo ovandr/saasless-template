@@ -21,61 +21,37 @@ export class CognitoAuthProvider {
   }
 
   async getUser() {
-    try {
-      return this.awsAuth.currentUserInfo();
-    } catch(e) {
-      throw { message: e };
-    }
+    return await this.awsAuth.currentUserInfo();
   }
 
   async login(formData) {
-    try {
-      await this.awsAuth.signIn(formData.email, formData.password);
-    } catch(e) {
-      throw { message: e };
-    }
+    await this.awsAuth.signIn(formData.email, formData.password);
   }
 
   async signUp(formData) {
-    try {
-      await this.awsAuth.signUp({
-        username: formData.email,
-        password: formData.password,
-        attributes: {
-          email: formData.email
-        }
-      });
-      await this.login(formData);
-      return {
-        email: formData.email,
-        title: formData.email.substr(0, formData.email.indexOf('@')),
-      };
-    } catch(e) {
-      throw { message: e };
-    }
+    await this.awsAuth.signUp({
+      username: formData.email,
+      password: formData.password,
+      attributes: {
+        email: formData.email
+      }
+    });
+    await this.login(formData);
+    return {
+      email: formData.email,
+      title: formData.email.substr(0, formData.email.indexOf('@')),
+    };
   }
 
   async sendVerificationCode(formData) {
-    try {
-      await this.awsAuth.resendSignUp(formData.email);
-    } catch(e) {
-      throw { message: e };
-    }
+    await this.awsAuth.resendSignUp(formData.email);
   }
 
   async verify(formData) {
-    try {
-      await this.awsAuth.confirmSignUp(formData.email, formData.code);
-    } catch(e) {
-      throw { message: e };
-    }
+    await this.awsAuth.confirmSignUp(formData.email, formData.code);
   }
 
   async logout() {
-    try {
-      await this.awsAuth.signOut();
-    } catch(e) {
-      throw { message: e };
-    }
+    await this.awsAuth.signOut();
   }
 }

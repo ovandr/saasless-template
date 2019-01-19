@@ -75,7 +75,7 @@ function SignUp(props) {
             <form className={classes.form}>
               {
                 error
-                  ? (<div className={classes.error}>Can't sign up: {error.message.message}</div>)
+                  ? (<div className={classes.error}>Can't sign up: {error.message}</div>)
                   : null
               }
               <FormControl margin="normal" required fullWidth>

@@ -76,7 +76,7 @@ function SignIn(props) {
             <form className={classes.form}>
               {
                 error
-                  ? (<div className={classes.error}>Can't login: {error.message.message}</div>)
+                  ? (<div className={classes.error}>Can't login: {error.message}</div>)
                   : null
               }
               <FormControl margin="normal" required fullWidth>
