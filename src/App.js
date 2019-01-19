@@ -20,7 +20,6 @@ import {
   Page2,
   SignUpPage,
   SignInPage,
-  VerifyPage,
   ProfilePage
 } from './pages';
 import Layout from './layouts/layout';
@@ -54,7 +53,6 @@ class App extends Component {
                 <Switch>
                   <Route exact path="/signup" component={SignUpPage} />
                   <Route exact path="/signin" component={SignInPage} />
-                  <Route exact path="/verify" name="Verify Page" component={VerifyPage} />
 
                   <Layout>
                     <Switch>
