@@ -4,14 +4,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { LoginForm } from '../frontends/auth-react';
+import { TextField } from '@material-ui/core';
 
 const styles = theme => ({
   layout: {
@@ -79,16 +78,14 @@ function SignUp(props) {
                   : null
               }
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input type="email"
+                <TextField label="Email Address" type="email"
                   id="email" name="email" autoComplete="email" autoFocus
                   value={formData.email}
                   onChange={e => onFormDataChange({ email: e.target.value })}
                 />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
+                <TextField label="Password"
                   name="password"
                   type="password"
                   id="password"
@@ -97,6 +94,7 @@ function SignUp(props) {
                   onChange={e => onFormDataChange({ password: e.target.value })}
                 />
               </FormControl>
+
               <div className={classes.buttonsContainer}>
                 <Button
                   className={classes.createAccountButton}

@@ -13,7 +13,7 @@ export class Page2 extends Component {
         <CardHeader title="Page2 Title" />
         <CardContent>
           Page2 Content
-                </CardContent>
+        </CardContent>
         <CardActions>
           <Button>Page2 Button</Button>
         </CardActions>

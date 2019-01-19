@@ -5,14 +5,13 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 import { LoginForm } from '../frontends/auth-react';
+import { TextField } from '@material-ui/core';
 
 const styles = theme => ({
   layout: {
@@ -80,16 +79,16 @@ function SignIn(props) {
                   : null
               }
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="email">Email Address</InputLabel>
-                <Input
+                <TextField
+                  label="Email Address"
                   id="email" name="email" autoComplete="email" autoFocus
                   value={formData.email}
                   onChange={e => onFormDataChange({ email: e.target.value })}
                 />
               </FormControl>
               <FormControl margin="normal" required fullWidth>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
+                <TextField
+                  label="Password"
                   name="password"
                   type="password"
                   id="password"
@@ -98,6 +97,15 @@ function SignIn(props) {
                   onChange={e => onFormDataChange({ password: e.target.value })}
                 />
               </FormControl>
+              <div>
+                Forgot your password?
+                <Button
+                  variant="text"
+                  color="primary"
+                >
+                  Reset
+                </Button>
+              </div>
               <div className={classes.buttonsContainer}>
                 <Button
                   className={classes.createAccountButton}
