@@ -13,59 +13,58 @@ import { Storage } from 'aws-amplify';
 
 class AllPhotos extends Component {
 
-    async handleDownload({ visibility: level, file }) {
-        try {
-            const { bucket, region, key } = file;
-            const [, , keyWithoutPrefix] = /([^/]+\/){2}(.*)$/.exec(key) || key;
+  handleDownload = async ({ visibility: level, file }) => {
+    try {
+      const { bucket, region, key } = file;
+      const [, , keyWithoutPrefix] = /([^/]+\/){2}(.*)$/.exec(key) || key;
 
-            const url = await Storage.get(keyWithoutPrefix, { bucket, region, level });
+      const url = await Storage.get(keyWithoutPrefix, { bucket, region, level });
 
-            window.open(url);
-        } catch(err) {
-            console.error(err);
-        }
+      window.open(url);
+    } catch(err) {
+      console.error(err);
     }
+  }
 
-    render() {
-        return (
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>PhotoId</TableCell>
-                        <TableCell>Friendly name</TableCell>
-                        <TableCell>Visibility</TableCell>
-                        <TableCell>Owner</TableCell>
-                        <TableCell>Created at</TableCell>
-                        <TableCell>Download</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {this.props.photos && this.props.photos.items && [].concat(this.props.photos.items).sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map(photo => (
-                        <TableRow key={photo.id}>
-                            <TableCell>{photo.file && photo.id}</TableCell>
-                            <TableCell>{photo.name}</TableCell>
-                            <TableCell>{photo.visibility}</TableCell>
-                            <TableCell>{photo.owner}</TableCell>
-                            <TableCell>{photo.file && photo.createdAt}</TableCell>
-                            <TableCell>
-                                {photo.file ? <Button onClick={this.handleDownload.bind(this, photo)}>Download</Button> : <div>loading</div>}
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        );
-    }
+  render() {
+    return (
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>PhotoId</TableCell>
+            <TableCell>File Name</TableCell>
+            <TableCell>Visibility</TableCell>
+            <TableCell>Owner</TableCell>
+            <TableCell>Created at</TableCell>
+            <TableCell>Download</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {[...this.props.photos].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map(photo => (
+            <TableRow key={photo.id}>
+              <TableCell>{photo.name}</TableCell>
+              <TableCell>{photo.visibility}</TableCell>
+              <TableCell>{photo.owner}</TableCell>
+              <TableCell>{photo.file && photo.createdAt}</TableCell>
+              <TableCell>
+                {photo.file ? <Button onClick={e => this.handleDownload(photo)}>Download</Button> : <div>loading</div>}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    );
+  }
 }
 
 export default graphql(
-    QueryListPictures,
-    {
-        options: {
-            fetchPolicy: 'cache-and-network',
-        },
-        props: ({ data: { listPictures: photos } }) => ({
-            photos,
-        })
-    }
+  QueryListPictures,
+  {
+    options: {
+      fetchPolicy: 'cache-and-network',
+    },
+    props: ({ data: { listPictures: photos } }) => ({
+      photos: photos ? photos.items : []
+    })
+  }
 )(AllPhotos);

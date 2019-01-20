@@ -15,9 +15,6 @@ class AddPhoto extends Component {
 
     this.state = this.getInitialState();
     this.fileInput = {};
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   getInitialState = () => ({
@@ -26,7 +23,7 @@ class AddPhoto extends Component {
     lastUpdate: new Date().toISOString()
   });
 
-  handleChange(field, event) {
+  handleChange = (field, event) => {
     const { target: { value, files } } = event;
     const [file,] = files || [];
     this.setState({
@@ -34,7 +31,7 @@ class AddPhoto extends Component {
     });
   }
 
-  async handleSubmit(e) {
+  handleSubmit = async (e) => {
     e.preventDefault();
 
     const { bucket, region } = this.props.options;
@@ -71,9 +68,20 @@ class AddPhoto extends Component {
     const isSubmitEnabled = this.state.name !== '' && this.state.file !== undefined;
     return (
       <form onSubmit={this.handleSubmit}>
-        <Input type="text" placeholder="Title" value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
-        <Input key={this.state.lastUpdate} type="file" onChange={this.handleChange.bind(this, 'file')} />
-        <Button type="submit" disabled={!isSubmitEnabled}>Add Photo</Button>
+        <Input
+          type="text"
+          placeholder="Title"
+          value={this.state.name}
+          onChange={this.handleChange.bind(this, 'name')}
+        />
+
+        <Input
+          key={this.state.lastUpdate}
+          type="file"
+          onChange={this.handleChange.bind(this, 'file')}
+        />
+
+        <Button type="submit" variant="contained" disabled={!isSubmitEnabled}>Add Photo</Button>
       </form>
     );
   }
