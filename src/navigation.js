@@ -5,9 +5,9 @@ export default [
     name: 'Upload Images'
   },
   {
-    path: '/page2',
+    path: '/publicpage',
     icon: 'mail',
-    name: 'Page2'
+    name: 'Public Page'
   },
   {
     divider: true

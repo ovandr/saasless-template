@@ -10,12 +10,12 @@ export class Page2 extends Component {
   render() {
     return (
       <Card>
-        <CardHeader title="Page2 Title" />
+        <CardHeader title="Public Page Title" />
         <CardContent>
-          Page2 Content
+          Public page Content
         </CardContent>
         <CardActions>
-          <Button>Page2 Button</Button>
+          <Button>Button</Button>
         </CardActions>
       </Card>
     )

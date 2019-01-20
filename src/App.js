@@ -57,7 +57,7 @@ class App extends Component {
                   <Layout>
                     <Switch>
                       <PrivateRoute exact path="/images" component={Page1} />
-                      <PrivateRoute exact path="/page2" component={Page2} />
+                      <Route exact path="/publicpage" component={Page2} />
                       <PrivateRoute exact path="/profile" component={ProfilePage} />
                       <Route exact path="/">
                         <Redirect to="/images" />
