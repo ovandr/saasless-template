@@ -26,7 +26,6 @@ yarn-error.log*
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/backend/amplify-meta.json
-amplify/team-provider-info.json
 amplify/backend/function/**/dist/
 aws-exports.js
 awsconfiguration.json
