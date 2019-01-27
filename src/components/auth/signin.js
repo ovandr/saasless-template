@@ -25,11 +25,15 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
 
-    this.inputs = {};
+    this.inputs = {
+        email: '',
+        password: ''
+    };
+
     this.state = {
       error: '',
       loading: false
-    }
+    };
   }
 
   changeState = (state, data) => {
@@ -40,11 +44,11 @@ class SignIn extends Component {
   }
 
   signIn = async () => {
-    const { username, password } = this.inputs;
+    const { email, password } = this.inputs;
 
     try {
       this.setState({ loading: true });
-      const user = await Auth.signIn(username, password);
+      const user = await Auth.signIn(email, password);
       this.signInSuccess(user);
     } catch (err) {
       this.signInError(err);
@@ -57,8 +61,6 @@ class SignIn extends Component {
   signInSuccess(user) {
     this.setState({ error: '' });
 
-    // There are other sign in challenges we don't cover here.
-    // SMS_MFA, SOFTWARE_TOKEN_MFA, NEW_PASSWORD_REQUIRED, MFA_SETUP ...
     if (user.challengeName === 'SMS_MFA' || user.challengeName === 'SOFTWARE_TOKEN_MFA') {
       this.changeState('confirmSignIn', user);
     } else {
@@ -67,11 +69,6 @@ class SignIn extends Component {
   }
 
   signInError(err) {
-    /*
-      err can be in different structure:
-        1) plain text message;
-        2) object { code: ..., message: ..., name: ... }
-    */
     this.setState({ error: err.message || err });
   }
 
