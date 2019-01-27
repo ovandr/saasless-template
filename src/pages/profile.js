@@ -62,6 +62,7 @@ class Profile extends Component {
   deleteProfile = async () => {
     const user = await Auth.currentAuthenticatedUser();
     user.deleteUser(() => { });
+    await Auth.signOut();
     this.handleClose();
   }
 

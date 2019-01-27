@@ -49,14 +49,15 @@ export default class ForgotPassword extends Component {
           placeholder="Username"
           defaultValue={authData || ''}
           fullWidth
+          margin="normal"
           onChange={event => this.inputs.username = event.target.value}
           autoFocus
         />
-        <Button color="primary" onClick={() => this.changeState('signIn')}>
+        <Button size="small" color="primary" onClick={() => this.changeState('signIn')}>
           Back to sign in
         </Button>
 
-        <Button color="primary" variant="contained" onClick={this.sendCode}>Send password reset code</Button>
+        <Button color="primary" variant="contained" onClick={this.sendCode}>Send reset code</Button>
         {error && <span>{error}</span>}
       </form>
     )

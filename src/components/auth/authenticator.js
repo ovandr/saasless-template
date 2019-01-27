@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 
 import { Authenticator } from 'aws-amplify-react';
 
+import Avatar from '@material-ui/core/Avatar';
+import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 
-import { 
+import {
   SignIn,
   ConfirmSignIn,
   SignUp,
@@ -34,6 +36,10 @@ const styles = theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+    backgroundColor: theme.palette.secondary.main,
   }
 });
 
@@ -44,6 +50,9 @@ class CustomAuthenticator extends Component {
     return (
       <main className={classes.layout}>
         <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
           <Authenticator hideDefault onStateChange={this.props.onStateChange}>
             <SignIn />
             <ConfirmSignIn />
@@ -52,7 +61,7 @@ class CustomAuthenticator extends Component {
             <ForgotPassword />
             <ForgotPasswordReset />
           </Authenticator>
-      </Paper>
+        </Paper>
       </main>
     )
   }
