@@ -1,26 +1,9 @@
 import React, { Component } from 'react';
-import { Auth, JS } from 'aws-amplify';
-import { withFederated } from 'aws-amplify-react';
+import { Auth } from 'aws-amplify';
 
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-
-const FederatedButtons = (props) => (
-  <Button color="secondary" variant="contained"
-    onClick={props.facebookSignIn}
-  >
-    Facebook
-  </Button>
-);
-
-const Federated = withFederated(FederatedButtons);
-
-const federated_data = {
-  google_client_id: '',
-  facebook_app_id: '__replace_with_your_facebook_app_id__',
-  amazon_client_id: ''
-};
 
 export default class SignIn extends Component {
   constructor(props) {
@@ -120,7 +103,6 @@ export default class SignIn extends Component {
         >
           Sign In
         </Button>
-        <Federated federated={federated_data} onStateChange={this.changeState} />
         {error && <span>{error}</span>}
       </form>
     )
