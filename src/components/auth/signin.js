@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 
 export default class SignIn extends Component {
@@ -97,13 +98,13 @@ export default class SignIn extends Component {
           onChange={event => this.inputs.password = event.target.value}
         />
         New to us?{' '}
-        <Button color="primary" size="small" onClick={() => this.changeState('signUp')}>
+        <Link component="button" onClick={() => this.changeState('signUp')}>
           Sign up
-        </Button>
+        </Link>
 
-        <Button color="primary" size="small" onClick={() => this.changeState('forgotPassword')}>
+        <Link component="button" onClick={() => this.changeState('forgotPassword')}>
           Forgot password
-        </Button>
+        </Link>
         <Button color="primary" variant="contained"
           onClick={this.signIn}
         >
