@@ -100,7 +100,7 @@ class SignIn extends Component {
           margin="normal"
           fullWidth
           defaultValue={authData || ''}
-          onChange={event => this.inputs.username = event.target.value}
+          onChange={event => this.inputs.email = event.target.value}
           autoFocus
         />
         <TextField
