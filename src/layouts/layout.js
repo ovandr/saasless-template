@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+import { Auth } from 'aws-amplify';
+
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import withWidth from '@material-ui/core/withWidth';
@@ -16,8 +19,6 @@ import MainMenu from "../components/navigation/main-menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-
-import { Logout } from "../frontends/auth-react";
 
 import menuTheme from "../themes/navigation-theme";
 import { MuiThemeProvider } from "@material-ui/core/styles";
@@ -93,6 +94,10 @@ class Layout extends React.Component {
     this.setState({ open: false });
   };
 
+  logout = async () => {
+    await Auth.signOut();
+  }
+
   render() {
     const { classes, width } = this.props;
     const isXS = width === 'xs';
@@ -119,13 +124,9 @@ class Layout extends React.Component {
             Saasless Template
           </Typography>
           <div className={classes.grow} />
-          <Logout>
-            {({ logout }) => (
-              <Button color="inherit" onClick={logout}>
-                Log Out
-              </Button>
-            )}
-          </Logout>
+          <Button color="inherit" onClick={this.logout}>
+            Log Out
+          </Button>
         </Toolbar>
       </AppBar>
     );

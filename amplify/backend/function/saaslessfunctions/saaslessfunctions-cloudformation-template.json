@@ -56,7 +56,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "saasless-template-20190118151320-deployment",
-					"S3Key": "amplify-builds/saaslessfunctions-1547890871-latest-build.zip"
+					"S3Key": "amplify-builds/saaslessfunctions-1548437035-latest-build.zip"
 				}
 			}
 		},

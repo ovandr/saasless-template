@@ -139,7 +139,7 @@
 							"Arn"
 						]
 					},
-					"env": "dev"
+					"env": "mdev"
 				}
 			}
 		},
@@ -159,7 +159,7 @@
 					},
 					"authPermissions": "rw",
 					"unauthPermissions": "",
-					"env": "dev"
+					"env": "mdev"
 				}
 			}
 		},
@@ -175,11 +175,11 @@
 							"Outputs.UserPoolId"
 						]
 					},
-					"schemaGraphql": "s3://saasless-template-20190118151320-deployment/amplify-appsync-files/schema.graphql.1547889899462",
+					"schemaGraphql": "s3://saasless-template-20190118151320-deployment/amplify-appsync-files/schema.graphql.1548437037126",
 					"ResolverBucket": "saasless-template-20190118151320-deployment",
 					"ResolverRootKey": "amplify-appsync-files",
-					"DeploymentTimestamp": "1547889899462",
-					"env": "dev"
+					"DeploymentTimestamp": "1548437037126",
+					"env": "mdev"
 				}
 			}
 		},
@@ -189,7 +189,7 @@
 				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190118151320-deployment/amplify-cfn-templates/hosting/template.json",
 				"Parameters": {
 					"bucketName": "saasless-template-hosting-bucket-dev",
-					"env": "dev"
+					"env": "mdev"
 				}
 			}
 		},
@@ -198,7 +198,7 @@
 			"Properties": {
 				"TemplateURL": "https://s3.amazonaws.com/saasless-template-20190118151320-deployment/amplify-cfn-templates/function/saaslessfunctions-cloudformation-template.json",
 				"Parameters": {
-					"env": "dev"
+					"env": "mdev"
 				}
 			}
 		}

@@ -11,20 +11,9 @@ import theme from './themes/app-theme';
 import awsconfig from './aws-exports';
 import Amplify, { Auth } from 'aws-amplify';
 
-import { Auth as sAuth } from './frontends/auth-core';
-import { Authenticator, PrivateRoute } from './frontends/auth-react';
+import { Authenticator } from './components/auth';
+import Main from './components/main';
 
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import {
-  Page1,
-  Page2,
-  SignUpPage,
-  SignInPage,
-  ProfilePage
-} from './pages';
-import Layout from './layouts/layout';
-
-const auth = new sAuth({});
 Amplify.configure(awsconfig);
 
 const GRAPHQL_API_REGION = awsconfig.aws_appsync_region
@@ -43,31 +32,24 @@ const client = new AWSAppSyncClient({
 });
 
 class App extends Component {
+  state = {
+    showAuth: true
+  }
+
+  handleStateChange = (authState) => {
+    this.setState({
+      showAuth: !['signedIn'].includes(authState)
+    });
+    console.log(authState);
+  }
+
   render() {
     return (
       <div className="App">
         <ApolloProvider client={client}>
-          <Router>
-            <Authenticator auth={auth}>
-              <MuiThemeProvider theme={theme}>
-                <Switch>
-                  <Route exact path="/signup" component={SignUpPage} />
-                  <Route exact path="/signin" component={SignInPage} />
-
-                  <Layout>
-                    <Switch>
-                      <PrivateRoute exact path="/images" component={Page1} />
-                      <Route exact path="/publicpage" component={Page2} />
-                      <PrivateRoute exact path="/profile" component={ProfilePage} />
-                      <Route exact path="/">
-                        <Redirect to="/images" />
-                      </Route>
-                    </Switch>
-                  </Layout>
-                </Switch>
-              </MuiThemeProvider>
-            </Authenticator>
-          </Router>
+          <MuiThemeProvider theme={theme}>
+            {this.state.showAuth ? <Authenticator onStateChange={this.handleStateChange} /> :  <Main />}
+          </MuiThemeProvider>
         </ApolloProvider>
       </div>
     );
