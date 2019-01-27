@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
 export default class SignIn extends Component {
@@ -10,7 +9,10 @@ export default class SignIn extends Component {
     super(props);
 
     this.inputs = {};
-    this.state = { error: '' }
+    this.state = {
+      error: '',
+      loading: false
+    }
   }
 
   changeState = (state, data) => {
@@ -24,11 +26,15 @@ export default class SignIn extends Component {
     const { username, password } = this.inputs;
 
     try {
+      this.setState({ loading: true });
       const user = await Auth.signIn(username, password);
       this.signInSuccess(user);
     } catch (err) {
       this.signInError(err);
     }
+
+
+    this.setState({ loading: false });
   }
 
   signInSuccess(user) {
@@ -56,7 +62,7 @@ export default class SignIn extends Component {
     try {
       const data = await Auth.verifiedContact(user);
       // if (!JS.isEmpty(data.verified)) {
-        this.changeState('signedIn', user);
+      this.changeState('signedIn', user);
       // } else {
       //   user = Object.assign(user, data);
       //   this.changeState('verifyContact', user);
@@ -101,7 +107,7 @@ export default class SignIn extends Component {
         <Button color="primary" variant="contained"
           onClick={this.signIn}
         >
-          Sign In
+          { this.state.loading ? 'Wait...' :  'Sign In' }
         </Button>
         {error && <span>{error}</span>}
       </form>

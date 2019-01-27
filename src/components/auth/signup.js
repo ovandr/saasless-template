@@ -9,7 +9,10 @@ export default class SignUp extends Component {
     super(props);
 
     this.inputs = {};
-    this.state = { error: '' }
+    this.state = {
+      error: '',
+      loading: false
+    }
   }
 
   changeState = (state, data) => {
@@ -23,6 +26,7 @@ export default class SignUp extends Component {
     const { password, email } = this.inputs;
 
     try {
+      this.setState({ loading: true });
       const user = await Auth.signUp({
         username: email,
         password: password,
@@ -40,6 +44,8 @@ export default class SignUp extends Component {
     } catch (err) {
       this.signUpError(err)
     }
+
+    this.setState({ loading: false });
   }
 
   signUpSuccess(username) {
@@ -83,7 +89,7 @@ export default class SignUp extends Component {
         <Button color="primary" variant="contained"
           onClick={this.signUp}
         >
-          Create account
+          {this.state.loading ? 'Wait...' : 'Create account'}
         </Button>
         {error && <span>{error}</span>}
       </form>
