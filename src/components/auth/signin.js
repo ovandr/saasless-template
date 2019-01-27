@@ -5,7 +5,23 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 
-export default class SignIn extends Component {
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const styles = theme => ({
+  container: {
+    textAlign: 'right'
+  },
+  spacer: {
+    flexGrow: 1
+  },
+  actionContainer: {
+    marginTop: theme.spacing.unit * 2,
+    display: 'flex',
+    alignItems: 'baseline'
+  }
+});
+
+class SignIn extends Component {
   constructor(props) {
     super(props);
 
@@ -74,7 +90,7 @@ export default class SignIn extends Component {
   }
 
   render() {
-    const { authState, authData } = this.props;
+    const { classes, authState, authData } = this.props;
 
     if (!['signIn', 'signedOut', 'signedUp'].includes(authState)) { return null; }
     const { error } = this.state;
@@ -97,21 +113,31 @@ export default class SignIn extends Component {
           fullWidth
           onChange={event => this.inputs.password = event.target.value}
         />
-        New to us?{' '}
-        <Link component="button" onClick={() => this.changeState('signUp')}>
-          Sign up
-        </Link>
 
-        <Link component="button" onClick={() => this.changeState('forgotPassword')}>
-          Forgot password
-        </Link>
-        <Button color="primary" variant="contained"
-          onClick={this.signIn}
-        >
-          { this.state.loading ? 'Wait...' :  'Sign In' }
-        </Button>
+        <div className={classes.container}>
+          <Link component="button" onClick={() => this.changeState('forgotPassword')}>
+            Forgot password
+          </Link>
+        </div>
+
+        <div className={classes.actionContainer}>
+          New to us?  
+          <Link component="button" onClick={() => this.changeState('signUp')}>
+            Sign up
+          </Link>
+          <div className={classes.spacer}/>
+
+          <Button color="primary" variant="contained"
+            onClick={this.signIn}
+          >
+            {this.state.loading ? 'Wait...' : 'Sign In'}
+          </Button>
+        </div>
+
         {error && <span>{error}</span>}
       </form>
     )
   }
 }
+
+export default withStyles(styles)(SignIn);

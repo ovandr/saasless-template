@@ -2,9 +2,26 @@ import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 
-export default class ConfirmSignUp extends Component {
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const styles = theme => ({
+  container: {
+    textAlign: 'right'
+  },
+  spacer: {
+    flexGrow: 1
+  },
+  actionContainer: {
+    marginTop: theme.spacing.unit * 2,
+    display: 'flex',
+    alignItems: 'baseline'
+  }
+});
+
+class ConfirmSignUp extends Component {
   constructor(props) {
     super(props);
     this.inputs = {};
@@ -51,7 +68,7 @@ export default class ConfirmSignUp extends Component {
   }
 
   render() {
-    const { authState, authData } = this.props;
+    const { classes, authState, authData } = this.props;
     if (authState !== 'confirmSignUp') { return null; }
 
     const { message, error } = this.state;
@@ -63,23 +80,36 @@ export default class ConfirmSignUp extends Component {
           placeholder="Username"
           defaultValue={authData || ''}
           fullWidth
+          margin="normal"
           onChange={event => this.inputs.username = event.target.value}
         />
         <TextField
           type="text"
           placeholder="Code"
           fullWidth
+          margin="normal"
           onChange={event => this.inputs.code = event.target.value}
           autoFocus
         />
-        <Button color="primary" onClick={() => this.changeState('signIn')}>
-          Back to sign in
-        </Button>
-        <Button color="primary" onClick={this.confirmSignUp}>Confirm</Button>
-        <Button color="primary" variant="contained" onClick={this.resendCode}>Resend</Button>
+
+        <div className={classes.container}>
+          <Link component="button" onClick={this.resendCode}>Resend</Link>
+        </div>
+
+        <div className={classes.actionContainer}>
+          <Link component="button" onClick={() => this.changeState('signIn')}>
+            Back to sign in
+          </Link>
+          <div className={classes.spacer} />
+
+          <Button color="primary" variant="contained" onClick={this.confirmSignUp}>Confirm</Button>
+        </div>
+
         {message && <span>{message}</span>}
         {error && <span>{error}</span>}
       </form>
     )
   }
 }
+
+export default withStyles(styles)(ConfirmSignUp)

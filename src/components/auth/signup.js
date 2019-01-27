@@ -5,7 +5,23 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 
-export default class SignUp extends Component {
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const styles = theme => ({
+  container: {
+    textAlign: 'right'
+  },
+  spacer: {
+    flexGrow: 1
+  },
+  actionContainer: {
+    marginTop: theme.spacing.unit * 2,
+    display: 'flex',
+    alignItems: 'baseline'
+  }
+});
+
+class SignUp extends Component {
   constructor(props) {
     super(props);
 
@@ -59,7 +75,7 @@ export default class SignUp extends Component {
   }
 
   render() {
-    const { authState } = this.props;
+    const { classes, authState } = this.props;
     if (authState !== 'signUp') { return null; }
 
     const { error } = this.state;
@@ -80,20 +96,30 @@ export default class SignUp extends Component {
           margin="normal"
           onChange={event => this.inputs.password = event.target.value}
         />
-        <Link component="button" onClick={() => this.changeState('signIn')}>
-          Back to sign in
-        </Link>
-        <p />
-        <Link component="button" onClick={() => this.changeState('confirmSignUp')}>
-          Confirm a code
-        </Link>
-        <Button color="primary" variant="contained"
-          onClick={this.signUp}
-        >
-          {this.state.loading ? 'Wait...' : 'Create account'}
-        </Button>
+
+        <div className={classes.container}>
+          <Link component="button" onClick={() => this.changeState('confirmSignUp')}>
+            Confirm a code
+          </Link>
+        </div>
+
+        <div className={classes.actionContainer}>
+          <Link component="button" onClick={() => this.changeState('signIn')}>
+            Back to sign in
+          </Link>
+          <div className={classes.spacer} />
+
+          <Button color="primary" variant="contained"
+            onClick={this.signUp}
+          >
+            {this.state.loading ? 'Wait...' : 'Create account'}
+          </Button>
+        </div>
+
         {error && <span>{error}</span>}
       </form>
     )
   }
 }
+
+export default withStyles(styles)(SignUp);

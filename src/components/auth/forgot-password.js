@@ -2,9 +2,23 @@ import React, { Component } from 'react';
 import { Auth } from 'aws-amplify';
 
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 
-export default class ForgotPassword extends Component {
+import withStyles from '@material-ui/core/styles/withStyles';
+
+const styles = theme => ({
+  spacer: {
+    flexGrow: 1
+  },
+  actionContainer: {
+    marginTop: theme.spacing.unit * 2,
+    display: 'flex',
+    alignItems: 'baseline'
+  }
+});
+
+class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.inputs = {};
@@ -37,7 +51,7 @@ export default class ForgotPassword extends Component {
   }
 
   render() {
-    const { authState, authData } = this.props;
+    const { classes, authState, authData } = this.props;
     if (authState !== 'forgotPassword') { return null; }
 
     const { error } = this.state;
@@ -45,21 +59,27 @@ export default class ForgotPassword extends Component {
     return (
       <form>
         <TextField
-          type="text"
-          placeholder="Username"
+          type="email"
+          placeholder="Email"
           defaultValue={authData || ''}
           fullWidth
           margin="normal"
           onChange={event => this.inputs.username = event.target.value}
           autoFocus
         />
-        <Button size="small" color="primary" onClick={() => this.changeState('signIn')}>
-          Back to sign in
-        </Button>
 
-        <Button color="primary" variant="contained" onClick={this.sendCode}>Send reset code</Button>
+        <div className={classes.actionContainer}>
+          <Link component="button" onClick={() => this.changeState('signIn')}>
+            Back to sign in
+          </Link>
+          <div className={classes.spacer} />
+          <Button color="primary" variant="contained" onClick={this.sendCode}>Send reset code</Button>
+        </div>
+
         {error && <span>{error}</span>}
       </form>
     )
   }
 }
+
+export default withStyles(styles)(ForgotPassword)

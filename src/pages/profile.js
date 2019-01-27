@@ -54,6 +54,7 @@ class Profile extends Component {
     try {
       await Auth.verifyCurrentUserAttributeSubmit('email', verificationCode);
       this.setState({ snackbarMessage: 'Email successfully verified' });
+      this.updateUserInfo();
     } catch(e) {
       this.setState({ snackbarMessage: e.message ? e.message : e });
     }
