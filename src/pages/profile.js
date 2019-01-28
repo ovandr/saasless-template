@@ -1,31 +1,41 @@
-import React, { Component } from 'react';
-import { Auth } from 'aws-amplify';
+import React, { Component } from "react";
+import { Auth } from "aws-amplify";
 
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import withStyles from '@material-ui/core/styles/withStyles';
 
-import UserInfo from '../components/user-info';
+import UserInfo from "../components/user-info";
+
+
+const styles = theme => ({
+  card: {
+    marginBottom: theme.spacing.unit * 3
+  }
+});
 
 class Profile extends Component {
   state = {
     user: undefined,
     showConfirmDialog: false,
-    verificationCode: '',
-    snackbarMessage: ''
-  }
+    verificationCode: "",
+    snackbarMessage: "",
+    oldPassword: "",
+    newPassword: ""
+  };
 
   componentDidMount() {
     this.updateUserInfo();
@@ -42,81 +52,155 @@ class Profile extends Component {
 
   deleteUser = () => {
     this.setState({ showConfirmDialog: true });
-  }
+  };
 
-  verificationCodeChange = (e) => {
+  verificationCodeChange = e => {
     this.setState({ verificationCode: e.target.value });
+  };
+
+  handleChange = (key, value) => {
+    this.setState({
+      [key]: value
+    })
   }
 
   verifyUser = async () => {
     const { verificationCode } = this.state;
 
     try {
-      await Auth.verifyCurrentUserAttributeSubmit('email', verificationCode);
-      this.setState({ snackbarMessage: 'Email successfully verified' });
+      await Auth.verifyCurrentUserAttributeSubmit("email", verificationCode);
+      this.setState({ snackbarMessage: "Email successfully verified" });
       this.updateUserInfo();
-    } catch(e) {
+    } catch (e) {
       this.setState({ snackbarMessage: e.message ? e.message : e });
     }
-  }
+  };
 
   deleteProfile = async () => {
     const user = await Auth.currentAuthenticatedUser();
-    user.deleteUser(() => { });
+    user.deleteUser(() => {});
     await Auth.signOut();
     this.handleClose();
-  }
+  };
 
   handleCloseSnackBar = () => {
-    this.setState({ snackbarMessage: '' });
-  }
+    this.setState({ snackbarMessage: "" });
+  };
 
   requestCode = async () => {
     try {
-      await Auth.verifyCurrentUserAttribute('email');
-      this.setState({ snackbarMessage: 'Verification code was sent' });
-    } catch(e) {
+      await Auth.verifyCurrentUserAttribute("email");
+      this.setState({ snackbarMessage: "Verification code was sent" });
+    } catch (e) {
       this.setState({ snackbarMessage: e.message });
     }
-  }
+  };
+
+  changePassword = async () => {
+    const { oldPassword, newPassword } = this.state;
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.changePassword(user, oldPassword, newPassword);
+      this.setState({
+        oldPassword: "",
+        newPassword: "",
+        snackbarMessage: "Password was changed"
+      });
+    } catch (e) {
+      this.setState({ snackbarMessage: e.message });
+    }
+  };
 
   render() {
+    const { classes } = this.props;
     const { user } = this.state;
 
     const loading = (
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: "center" }}>
         <CircularProgress />
       </div>
     );
 
     return (
       <React.Fragment>
-        <Card>
+        <Card className={classes.card}>
           <CardHeader title="Profile Info" />
           <CardContent>
             {this.state.user ? <UserInfo user={this.state.user} /> : loading}
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="secondary" onClick={this.deleteUser}>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={this.deleteUser}
+            >
               Delete Profile
             </Button>
           </CardActions>
         </Card>
 
-        {(user && !user.attributes.email_verified) && (
-          <Card>
-            <CardHeader title="Email Verification" />
+        {user && (
+          <Card className={classes.card}>
+            <CardHeader title="Change Password" />
             <CardContent>
-              <TextField label="Verification Code" fullWidth
-                onChange={this.verificationCodeChange} />
+              <form>
+                <TextField
+                  type="password"
+                  placeholder="Old Password"
+                  defaultValue={""}
+                  fullWidth
+                  margin="normal"
+                  onChange={e => this.handleChange("oldPassword", e.target.value)}
+                  autoFocus
+                />
+
+                <TextField
+                  type="password"
+                  placeholder="New Password"
+                  defaultValue={""}
+                  fullWidth
+                  margin="normal"
+                  onChange={e => this.handleChange("newPassword", e.target.value)}
+                />
+              </form>
             </CardContent>
             <CardActions>
-              <Button variant="contained" color="primary" onClick={this.verifyUser}>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={this.changePassword}
+              >
+                Change Password
+              </Button>
+            </CardActions>
+          </Card>
+        )}
+
+        {user && !user.attributes.email_verified && (
+          <Card className={classes.card}>
+            <CardHeader title="Email Verification" />
+            <CardContent>
+              <TextField
+                label="Verification Code"
+                fullWidth
+                onChange={e => this.handleChange("verificationCode", e.target.value)}
+              />
+            </CardContent>
+            <CardActions>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.verifyUser}
+              >
                 Verify
-            </Button>
-              <Button variant="contained" color="primary" onClick={this.requestCode}>
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.requestCode}
+              >
                 Request New Code
-            </Button>
+              </Button>
             </CardActions>
           </Card>
         )}
@@ -127,7 +211,9 @@ class Profile extends Component {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{"Do you want to Delete your account?"}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">
+            {"Do you want to Delete your account?"}
+          </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
               All content will be deleted.
@@ -144,10 +230,10 @@ class Profile extends Component {
         </Dialog>
 
         <Snackbar
-          open={this.state.snackbarMessage !== ''}
+          open={this.state.snackbarMessage !== ""}
           autoHideDuration={4000}
           onClose={this.handleCloseSnackBar}
-          ContentProps={{ 'aria-describedby': 'message-id' }}
+          ContentProps={{ "aria-describedby": "message-id" }}
           message={<span id="message-id">{this.state.snackbarMessage}</span>}
           action={[
             <IconButton
@@ -161,8 +247,8 @@ class Profile extends Component {
           ]}
         />
       </React.Fragment>
-    )
+    );
   }
 }
 
-export const ProfilePage = Profile;
+export default withStyles(styles)(Profile)
